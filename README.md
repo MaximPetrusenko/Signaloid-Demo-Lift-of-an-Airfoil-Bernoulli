@@ -16,12 +16,10 @@ Other assumptions are:
 The inputs and their ranges are:
   -	`A`:		0.1 to 1 m^2 - area of the 2D airfoil
   -	`h`:	  0.0 to 11019 m - elevation (troposphere)
-  - `T`:	  -50 °C to 50 °C 
+  - `T`:	  -50 °C to 50 °C - ambient temperature
   -	`V`:		10 to 343 m/s - velocity below supersonic speed
   -	`Сp1`:	~-2.8 to ~1.0 - coefficient for pressurre distribution over an airfoil
   -	`Сp2`:	~-0.54 to ~1.14 - coefficient for pressurre distribution under an airfoil
-
-The parameter `gamma` is the APB energy with units J/m^2, `phi` is the precipitate volume fraction, `Rs` is mean particle radius on plane with units m, `G` is the shear modulus with units Pa, `b` is the magnitude of the Burgers vector with units m, and `M` is the Taylor factor.
 
 ## Outputs
 Lift force is being calculated by multiplying the net pressure by the wing area.
