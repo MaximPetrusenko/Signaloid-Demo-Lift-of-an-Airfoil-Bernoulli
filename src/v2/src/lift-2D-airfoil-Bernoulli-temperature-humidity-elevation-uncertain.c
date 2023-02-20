@@ -1,6 +1,6 @@
 /*v2 - assume that temperature, elevation, humidity and, therefore, fluid density are uncertain
 * V = 30 m/s
-* A = 0.23 m
+* A = 0.23 m^2
 * empirical coefficient for pressure distributions at 10° angle of attack
 */
 #include <math.h>
@@ -64,14 +64,14 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
     * Psat = 6.1078*10^(7,5*T/(T+237,3))
     *
     */
-    double Pa = exp((-9.81 * 0.0289644 * h)/(8.31432 * (T+273.15))) * 101325.0;// atm * sea level pressure 101325 hPa
+    double Pair = exp((-9.81 * 0.0289644 * h)/(8.31432 * (T+273.15))) * 101325.0;// atm * sea level pressure 101325 hPa
     double Psat = 6.1078*pow(10.0,7.5*T/(T+237.3));
     double Pv = Psat*Rh;
-    double Pd = Pa - Pv;
+    double Pd = Pair - Pv;
     printf("T=%f\n", T);
     printf("h=%f\n", h);
     printf("Rh=%f\n", Rh);
-    printf("Pa=%f\n", Pa);
+    printf("Pa=%f\n", Pair);
     printf("P1=%f\n", Psat);  
     printf("Pv=%f\n", Pv);
     printf("Pd=%f\n", Pd);
