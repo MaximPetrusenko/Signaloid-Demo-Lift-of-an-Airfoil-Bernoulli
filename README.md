@@ -20,6 +20,8 @@ The inputs and their ranges are:
   -	`V`:		10 to 343 m/s - velocity below supersonic speed
   -	`Сp1`:	~-2.8 to ~1.0 - coefficient for pressurre distribution over an airfoil
   -	`Сp2`:	~-0.54 to ~1.14 - coefficient for pressurre distribution under an airfoil
+  
+![Coefficient-of-Pressure-vs-Percent-Chord-Length](https://user-images.githubusercontent.com/72452482/220147400-506b3916-9d18-4a7d-9139-2214d3a66bc1.png)
 
 ## Outputs
 Lift force is being calculated by multiplying the net pressure by the wing area.
