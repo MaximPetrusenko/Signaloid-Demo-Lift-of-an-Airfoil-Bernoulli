@@ -1,10 +1,10 @@
-/*v1 - no uncertaunties  
+/*v1 - no uncertainties  
 * T = 15 °C, density 1.2253kg/m3
 * h = 0.0 m
 * V = 30 m/s
 * A = 0.23 m
 * Rh = 0.0 (dry air)
-* empirical coefficient for pressure distributions at 10° angle of attack
+* Cp1 and Cp2 are empirical coefficients for pressure distributions at 10° angle of attack digitized from plot
 */
 #include <math.h>
 #include <stdint.h>
@@ -18,23 +18,22 @@
  *	Inputs v1 [NACA 2412, 10° angle of attack]: https://www.researchgate.net/publication/319271205_Aerodynamic_Performance_of_the_NACA_2412_Airfoil_at_Low_Reynolds_Number 
  *	The inputs and their ranges are:
  *	-	`A`:		0.1 to 1 m^2 - area of the 2D airfoil
- *	-	`h`:	    0.0 to 11019 m - elevation (troposphere)
- *  -   `T`:	   -50 °C to 50 °C 
+ *	-	`h`:	   	0.0 to 11019 m - elevation (troposphere)
+ *      -   	`T`:	   	-50 °C to 50 °C 
  *	-	`V`:		10 to 343 m/s - velocity below supersonic speed
- *	-	`Сp1`:		~-2.8 to 1.0 - coefficient for pressurre distribution over an airfoil
- *	-	`Сp2`:		~-0.54 to 1.14 - coefficient for pressurre distribution under an airfoil
+ *	-	`Сp1`:		~-2.8 to 1.0 - coefficient for pressurre distribution over an airfoil (digitized plot)
+ *	-	`Сp2`:		~-0.54 to 1.14 - coefficient for pressurre distribution under an airfoil (digitized plot)
  *
- *
- *
- *	Bernouilli law 
+ *  Bernouilli law 
  *  P1+1/2*𝜌*(𝑣1)^2+𝜌*𝑔*𝑦1=P2+1/2*𝜌*(𝑣2)^2+𝜌*𝑔*𝑦2.
- *	Assumimg the difference in height between the top and bottom of the airfoil is neglidgible, there hydrostatic term is going to be canceled out and leave us just static and dynamic pressure terms
- *	P1+1/2*𝜌*(𝑣1)^2=P2+1/2*𝜌*(𝑣2)^2.
+ *  Assumimg the difference in height between the top and bottom of the airfoil is neglidgible, there hydrostatic term is going to be canceled out and leave us just static and dynamic pressure terms
+ *  P1+1/2*𝜌*(𝑣1)^2=P2+1/2*𝜌*(𝑣2)^2.
  *  After moving static pressure terms to the left side and dynamic pressure terms to the right side, we get difference in pressure between the bottom and top of the airfoil
  *  P1-P2 = 1/2 * 𝜌 * ((𝑣2)^2- (𝑣1)^2)
- *  Velocities are being calculated based on pressure coefficient distributions 
- *  V = |Vstream| - sqrt(Cp - 1)
- *   
+ *
+ *  Velocities are being calculated based on pressure coefficient distributions:
+ *  V = Vstream - sqrt(|1-Cpx|)
+ * 
  *  Air density r(kg/m^3) calculation process:
  *
  *  air pressure in Pa [Pair = P0 × exp(-g × M × (h - h0)/(R × T)] = result in atm (1 atm = 101,325 Pa) 
@@ -80,7 +79,7 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
     printf("Pv=%f\n", Pv);
     printf("Pd=%f\n", Pd);
 
-	double empiricalPressureCoefficientOverAirfoil[] = {  //empirical or theoretical/simulated?
+	double empiricalPressureCoefficientOverAirfoil[] = {
         -2.3444, -2.4402, -2.5411, -2.577, -2.7322, -2.7316, -2.5977,
         -2.575, -2.5415, -2.3405, -2.3121, -2.2061, -2.1597, -2.0826,
         -1.9988, -1.9037, -1.7997, -1.7692, -1.63, -1.6235, -1.4999
@@ -93,7 +92,7 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
         -0.2451, -0.2248, -0.2195, -0.2012, -0.1998, -0.1808, -0.1781,
         -0.1831, -0.1885, -0.1837, -0.1769, -0.1889, -0.1865, -0.1799,
         -0.1841, -0.1785, -0.1838, -0.1742, -0.1779, -0.1823, -0.1789
-		};
+	};
 
         double empiricalPressureCoefficientUnderAirfoil[] = {
         0.8111, 0.9226, 1.0007, 0.9934, 0.8905, 0.8737, 0.7471,
@@ -108,7 +107,7 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
         0.1299, 0.1214, 0.1199, 0.1316, 0.1322, 0.1217, 0.1134,
         0.1001, 0.102, 0.1118, 0.1173, 0.1216, 0.1122, 0.1017,
         0.1134, 0.1031, 0.1022, 0.1164, 0.1036, 0.1032, 0.1174
-		}; 
+	}; 
     
     /*Vx = Vstream * sqrt(|1-Cpx|)*/
 
@@ -118,15 +117,15 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
         *v2 += V * sqrt(fabs(1-empiricalPressureCoefficientUnderAirfoil[i]));
 	}
 	*v1 /= sizeof(empiricalPressureCoefficientOverAirfoil)/sizeof(double);
-    *v2 /= sizeof(empiricalPressureCoefficientUnderAirfoil)/sizeof(double);
-    printf("v1=%f\n", *v1);
-    printf("v2=%f\n", *v2);
+       *v2 /= sizeof(empiricalPressureCoefficientUnderAirfoil)/sizeof(double);
+       printf("v1=%f\n", *v1);
+       printf("v2=%f\n", *v2);
 	*A		= 2.3E-1;
-    printf("area=%f\n", *A);
+       printf("area=%f\n", *A);
 
     /*  r = (Pd/(Rd*T))+(Pv/(Rv*T)). */
-    *r = (Pd/(287.058*(T+273.15)))+(Pv/(461.495*(T+273.15)));
-    printf("density=%f\n", *r);
+        *r = (Pd/(287.058*(T+273.15)))+(Pv/(461.495*(T+273.15)));
+        printf("density=%f\n", *r);
 
 }
 
