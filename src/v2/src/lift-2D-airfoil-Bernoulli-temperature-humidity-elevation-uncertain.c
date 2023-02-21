@@ -135,7 +135,7 @@ int main(int argc, char *	argv[])
     /*	Fl = 1/2 * 𝜌 * a  * ((𝑣1)^2- (𝑣2)^2)*/
 	liftForce = r*A*(pow(v1, 2)-pow(v2, 2)) / 2.0;
 
-	printf("Lift force = %f", liftForce);
+	printf("Lift force = %f\n", liftForce);
 
 	return 0;
 }

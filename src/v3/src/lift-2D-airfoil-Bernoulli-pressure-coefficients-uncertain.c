@@ -85,17 +85,6 @@
     }
 }
 
-// double *readColumn (int row, int col, double ** data, double *Cp) {
-//     for(int i = 1; i < 140; i++)
-// {
-//     Cp[row][i-1] = data[i][0];
-//     //printf("%f\t", data[i][0]);
-// }
-// //printf("Cp%f\t",Cp[1]);
-// return Cp;
-// }
-
-
 static void
 loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, double *  Cp2)
 {
@@ -170,11 +159,11 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
         //printf("empricalPressure10AOA[i+row-1]=%f\n", empricalPressure10AOA[i+row-1]);   
     }
 
-     double empiricalPressureCoefficientsUncertain[sampleCount][2*(row-1)]  = { 
+    double empiricalPressureCoefficientsUncertain[sampleCount][2*(row-1)]  = { 
         *empricalPressure10AOA ,
         *empricalPressure5AOA ,
         *empricalPressure0AOA
-		};
+    };
 
     double empiricalPressureCoefficients[2*(row-1)];
 
