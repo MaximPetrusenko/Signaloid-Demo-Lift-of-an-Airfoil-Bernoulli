@@ -150,6 +150,7 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
     double empricalPressure5AOA[totalLength];
     double empricalPressure0AOA[totalLength];
 
+    //create arrays that have over (from index 0 to row-1) and lower (from index row -1 to end of the array ) pressure coefficients for certain angles of attack
     for (int i = 0; i < totalLength/2; i++)
     {
         empricalPressure10AOA[i]  =empricalPressureOver10AOA[i];
@@ -164,10 +165,10 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
         //printf("empricalPressure10AOA[i+row-1]=%f\n", empricalPressure10AOA[i+row-1]);   
     }
 
-    double empiricalPressureCoefficientsUncertain[sampleCount][totalLength]  = { 
-        {*empricalPressure10AOA},
-        {*empricalPressure5AOA},
-        {*empricalPressure0AOA}
+    double *empiricalPressureCoefficientsUncertain[sampleCount][totalLength]  = { 
+        {empricalPressure10AOA},
+        {empricalPressure5AOA},
+        {empricalPressure0AOA}
     };
 
     double empiricalPressureCoefficients[totalLength];
