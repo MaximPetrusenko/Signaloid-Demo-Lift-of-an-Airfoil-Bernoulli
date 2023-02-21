@@ -177,7 +177,7 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
 			empiricalPressureCoefficients,
 			(void *) empiricalPressureCoefficientsUncertain,
 			sampleCount,
-			2*(row-1));
+			totalLength);
 
 
     /*Vx = Vstream * sqrt(|1-Cpx|)*/ 
