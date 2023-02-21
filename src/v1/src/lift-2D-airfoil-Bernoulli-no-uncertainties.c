@@ -2,7 +2,7 @@
 * T = 15 °C, density 1.2253kg/m3
 * h = 0.0 m
 * V = 30 m/s
-* A = 0.23 m
+* A = 0.23 m^2
 * Rh = 0.0 (dry air)
 * Cp1 and Cp2 are empirical coefficients for pressure distributions at 10° angle of attack digitized from plot
 */
@@ -15,11 +15,11 @@
  *	Computation of generated lift force for a 2D NACA 2412 airfoil based on Bernoulli s equation (applicable only for inviscid and incompressible dry air flow)
  *  Reference levels h0 (reference height is set at sea level) = 0, P0 (reference pressure) = 1 atm
  *
- *	Inputs v1 [NACA 2412, 10° angle of attack]: https://www.researchgate.net/publication/319271205_Aerodynamic_Performance_of_the_NACA_2412_Airfoil_at_Low_Reynolds_Number 
+ *	Inputs v1 [NACA 2412, 10° angle of attack]:
  *	The inputs and their ranges are:
  *	-	`A`:		0.1 to 1 m^2 - area of the 2D airfoil
  *	-	`h`:	   	0.0 to 11019 m - elevation (troposphere)
- *      -   	`T`:	   	-50 °C to 50 °C 
+ *  -   `T`:	   	-50 °C to 50 °C - ambient temperature
  *	-	`V`:		10 to 343 m/s - velocity below supersonic speed
  *	-	`Сp1`:		~-2.8 to 1.0 - coefficient for pressurre distribution over an airfoil (digitized plot)
  *	-	`Сp2`:		~-0.54 to 1.14 - coefficient for pressurre distribution under an airfoil (digitized plot)
@@ -67,7 +67,7 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
     * Psat = 6.1078*10^(7,5*T/(T+237,3))
     *
     */
-    double Pa = exp((-9.81 * 0.0289644 * h)/(8.31432 * (T+273.15))) * 101325.0;// atm * sea level pressure 101325 hPa
+    double Pa = exp((-9.81 * 0.0289644 * h)/(8.31432 * (T+273.15))) * 101325.0;// atm * sea level pressure 101325 Pa
     double Psat = 6.1078*pow(10.0,7.5*T/(T+237.3));
     double Pv = Psat*Rh;
     double Pd = Pa - Pv;
@@ -135,7 +135,7 @@ int main(int argc, char *	argv[])
 
 	loadInputs(&A, &v1, &v2, &r, &Cp1, &Cp2);
 
-    //*	Fl = 1/2 * 𝜌 * a  * ((𝑣1)^2- (𝑣2)^2)
+    /*	Fl = 1/2 * 𝜌 * a  * ((𝑣1)^2- (𝑣2)^2)*/
 	liftForce = r*A*(pow(v1, 2)-pow(v2, 2)) / 2.0;
 
 	printf("Lift force = %f", liftForce);
