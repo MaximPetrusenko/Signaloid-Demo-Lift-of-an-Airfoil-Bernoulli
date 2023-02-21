@@ -165,10 +165,10 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
         //printf("empricalPressure10AOA[i+row-1]=%f\n", empricalPressure10AOA[i+row-1]);   
     }
 
-    double *empiricalPressureCoefficientsUncertain[sampleCount][totalLength]  = { 
-        {empricalPressure10AOA},
-        {empricalPressure5AOA},
-        {empricalPressure0AOA}
+    double empiricalPressureCoefficientsUncertain[sampleCount][totalLength]  = { 
+        {*empricalPressure10AOA},
+        {*empricalPressure5AOA},
+        {*empricalPressure0AOA}
     };
 
     double empiricalPressureCoefficients[totalLength];
