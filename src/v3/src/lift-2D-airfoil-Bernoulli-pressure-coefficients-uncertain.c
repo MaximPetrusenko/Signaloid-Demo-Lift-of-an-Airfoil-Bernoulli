@@ -96,7 +96,7 @@ void read_csv(int row, int col, char *filename, double **data){
 }
 
 static void
-loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, double *  Cp2)
+loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, double *  Cp2, char[] filename)
 {
     double V  = 30.0;
     double Rh = 0.0; 
@@ -123,7 +123,7 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
     printf("Pd=%f\n", Pd);
 
 
-	char fname[256] = "v3/src/all_angles.csv";
+	char fname[256] = filename;
 
 	double **data;
 	data = (double **)malloc(row * sizeof(double *));
@@ -206,9 +206,15 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
 
 int main(int argc, char *	argv[])
 {
-	double	A, v1, v2, r, Cp1, Cp2, liftForce;
+    /* code */
+	if (argc < 1){
+		printf("Please specify the CSV file as an input.\n");
+		exit(0);
+	}
 
-	loadInputs(&A, &v1, &v2, &r, &Cp1, &Cp2);
+	double	A, v1, v2, r, Cp1, Cp2, liftForce;
+    char fname[256];	strcpy(fname, argv[0]);
+	loadInputs(&A, &v1, &v2, &r, &Cp1, &Cp2, fname);
 
     /*	Fl = 1/2 * 𝜌 * a  * ((𝑣1)^2- (𝑣2)^2)*/
 	liftForce = r*A*(pow(v1, 2)-pow(v2, 2)) / 2.0;
