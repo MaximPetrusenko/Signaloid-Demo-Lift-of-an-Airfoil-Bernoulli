@@ -165,9 +165,9 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
     }
 
     double empiricalPressureCoefficientsUncertain[sampleCount][totalLength]  = { 
-        *empricalPressure10AOA ,
-        *empricalPressure5AOA ,
-        *empricalPressure0AOA
+        {*empricalPressure10AOA},
+        {*empricalPressure5AOA},
+        {*empricalPressure0AOA}
     };
 
     double empiricalPressureCoefficients[totalLength];
