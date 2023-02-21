@@ -1,7 +1,9 @@
 /*v3 - assume that temperature, elevation, humidity and, therefore, fluid density are uncertain
+* T = 15 °C, density 1.2253kg/m3
+* h = 0.0 m
 * V = 30 m/s
 * A = 0.23 m^2
-* empirical coefficient for pressure distributions at 10° angle of attack
+* Rh = 0.0 (dry air)
 */
 #include <math.h>
 #include <stdint.h>
@@ -58,7 +60,7 @@ enum {
      totalLength     = (row-1)*2,
 };
 
- void read_csv(int row, int col, char *filename, double **data){
+void read_csv(int row, int col, char *filename, double **data){
 	FILE *file;
 	file = fopen(filename, "r");
 
@@ -121,7 +123,7 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
     printf("Pd=%f\n", Pd);
 
 
-	char fname[256] = "all_angles.csv";
+	char fname[256] = "v3/src/all_angles.csv";
 
 	double **data;
 	data = (double **)malloc(row * sizeof(double *));
