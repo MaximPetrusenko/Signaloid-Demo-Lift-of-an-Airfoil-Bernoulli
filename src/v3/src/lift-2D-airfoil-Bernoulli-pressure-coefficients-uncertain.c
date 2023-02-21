@@ -50,6 +50,14 @@
  *
  *
  */
+
+enum {
+     sampleCount     = 3,
+     row     = 140,
+	 col     = 7,
+     totalLength     = (row-1)*2,
+};
+
  void read_csv(int row, int col, char *filename, double **data){
 	FILE *file;
 	file = fopen(filename, "r");
@@ -112,10 +120,7 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
     printf("Pv=%f\n", Pv);
     printf("Pd=%f\n", Pd);
 
-    int const sampleCount     = 3;
-    int const row     = 140;
-	int const col     = 7;
-    int const totalLength     = (row-1)*2;
+
 	char fname[256] = "all_angles.csv";
 
 	double **data;
@@ -159,13 +164,13 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
         //printf("empricalPressure10AOA[i+row-1]=%f\n", empricalPressure10AOA[i+row-1]);   
     }
 
-    double empiricalPressureCoefficientsUncertain[sampleCount][2*(row-1)]  = { 
+    double empiricalPressureCoefficientsUncertain[sampleCount][totalLength]  = { 
         *empricalPressure10AOA ,
         *empricalPressure5AOA ,
         *empricalPressure0AOA
     };
 
-    double empiricalPressureCoefficients[2*(row-1)];
+    double empiricalPressureCoefficients[totalLength];
 
 	libUncertainDoubleDistFromMultidimensionalSamples(
 			empiricalPressureCoefficients,
