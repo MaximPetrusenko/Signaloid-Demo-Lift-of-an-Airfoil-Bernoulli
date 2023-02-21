@@ -175,7 +175,7 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
 
 	libUncertainDoubleDistFromMultidimensionalSamples(
 			empiricalPressureCoefficients,
-			(void *) empiricalPressureCoefficientsUncertain,
+			(double *) empiricalPressureCoefficientsUncertain,
 			sampleCount,
 			totalLength);
 
