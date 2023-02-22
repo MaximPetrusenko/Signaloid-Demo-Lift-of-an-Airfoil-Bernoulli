@@ -22,13 +22,13 @@
  *	-	`A`:		0.1 to 1 m^2 - area of the 2D airfoil
  *	-	`h`:	    0.0 to 11019 m - elevation (troposphere)
  *  -   `T`:	   -50 °C to 50 °C - ambient temperature uncertain 
- *	-	`V`:		10 to 343 m/s - velocity below supersonic speed
+ *	-	`V`:		10 to 343 m/s - free stream velocity below supersonic speed
  *	-	`Сp1`:		~-2.8 to 1.0 - coefficient for pressurre distribution over an airfoil
  *	-	`Сp2`:		~-0.54 to 1.14 - coefficient for pressurre distribution under an airfoil
  *
  *
  *  Velocities are being calculated based on pressure coefficient distributions 
- *  Vx = Vstream * sqrt(|1-Cpx|)
+ *  𝑣x = V * sqrt(|1-Cpx|)
  *   
  *  Air density r(kg/m^3) calculation process:
  *
