@@ -23,8 +23,16 @@ The inputs and their ranges are:
   
 ![Coefficient-of-Pressure-vs-Percent-Chord-Length](https://user-images.githubusercontent.com/72452482/220147400-506b3916-9d18-4a7d-9139-2214d3a66bc1.png)
 
+#Bernouilli law 
+P1+1/2*𝜌*(𝑣1)^2+𝜌*𝑔*𝑦1=P2+1/2*𝜌*(𝑣2)^2+𝜌*𝑔*𝑦2. where P1 and P2 are pressures of the fluid in volumes, the variable 𝑣1 and 𝑣2 represent the wind speeds, 𝑦1 and 𝑦2 represent the height of the fluid in under and over and airfoil respectively.
+Assumimg the difference in height between the top and bottom of the airfoil is neglidgible, there hydrostatic term is going to be canceled out and leave us just static and dynamic pressure terms
+P1+1/2*𝜌*(𝑣1)^2=P2+1/2*𝜌*(𝑣2)^2.
+After moving static pressure terms to the left side and dynamic pressure terms to the right side, we get difference in pressure between the bottom and top of the airfoil
+P1-P2 = 1/2 * 𝜌 * ((𝑣2)^2- (𝑣1)^2)
+Velocities are being calculated based on pressure coefficient distributions 
+Vx = Vstream * sqrt(|1-Cpx|)
 ## Outputs
-Lift force (N) is being calculated by multiplying the net pressure by the wing area.
+Lift force Fl (N) is being calculated by multiplying the net pressure by the wing area.
 Fl = 1/2 * 𝜌 * A  * ((𝑣2)^2- (𝑣1)^2)
 where 𝜌 is the density of the air, A is the area of a 2D airfoil, v2 - wind speed over an airfoil, v1 - wind speed under an airfoil
  
