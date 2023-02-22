@@ -45,7 +45,7 @@
  *  Lift force is being calculated by multiplying the net pressure by the wing area.
  *  
  *	Outputs:
- *  - "Fl" - N/m^3 - Lift force
+ *  - 'Fl' -  Lift force (N)
  *	Fl = 1/2 * 𝜌 * a  * ((𝑣2)^2- (𝑣1)^2)
  *
  *
@@ -71,13 +71,13 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
     double Psat = 6.1078*pow(10.0,7.5*T/(T+237.3));
     double Pv = Psat*Rh;
     double Pd = Pa - Pv;
-    printf("T=%f\n", T);
-    printf("h=%f\n", h);
-    printf("Rh=%f\n", Rh);
-    printf("Pa=%f\n", Pa);
-    printf("P1=%f\n", Psat);  
-    printf("Pv=%f\n", Pv);
-    printf("Pd=%f\n", Pd);
+    // printf("T=%f\n", T);
+    // printf("h=%f\n", h);
+    // printf("Rh=%f\n", Rh);
+    // printf("Pa=%f\n", Pa);
+    // printf("P1=%f\n", Psat);  
+    // printf("Pv=%f\n", Pv);
+    // printf("Pd=%f\n", Pd);
 
 	double empiricalPressureCoefficientOverAirfoil[] = {
         -2.3444, -2.4402, -2.5411, -2.577, -2.7322, -2.7316, -2.5977,
@@ -117,15 +117,15 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
         *v2 += V * sqrt(fabs(1-empiricalPressureCoefficientUnderAirfoil[i]));
 	}
 	*v1 /= sizeof(empiricalPressureCoefficientOverAirfoil)/sizeof(double);
-       *v2 /= sizeof(empiricalPressureCoefficientUnderAirfoil)/sizeof(double);
-       printf("v1=%f\n", *v1);
-       printf("v2=%f\n", *v2);
+    *v2 /= sizeof(empiricalPressureCoefficientUnderAirfoil)/sizeof(double);
+    //    printf("v1=%f\n", *v1);
+    //    printf("v2=%f\n", *v2);
 	*A		= 2.3E-1;
-       printf("area=%f\n", *A);
+    //    printf("area=%f\n", *A);
 
     /*  r = (Pd/(Rd*T))+(Pv/(Rv*T)). */
-        *r = (Pd/(287.058*(T+273.15)))+(Pv/(461.495*(T+273.15)));
-        printf("density=%f\n", *r);
+    *r = (Pd/(287.058*(T+273.15)))+(Pv/(461.495*(T+273.15)));
+        // printf("density=%f\n", *r);
 
 }
 
@@ -138,7 +138,7 @@ int main(int argc, char *	argv[])
     /*	Fl = 1/2 * 𝜌 * a  * ((𝑣1)^2- (𝑣2)^2)*/
 	liftForce = r*A*(pow(v1, 2)-pow(v2, 2)) / 2.0;
 
-	printf("Lift force = %f\n", liftForce);
+	printf("Lift force = %f N\n", liftForce);
 
 	return 0;
 }

@@ -43,7 +43,7 @@
  *  Lift force is being calculated by multiplying the net pressure by the wing area.
  *  
  *	Outputs:
- *  - "Fl" - Lift force (N)
+ *  - 'Fl' -  Lift force (N)
  *	Fl = 1/2 * 𝜌 * a  * ((𝑣2)^2- (𝑣1)^2)
  *
  *
@@ -136,7 +136,7 @@ int main(int argc, char *	argv[])
     /*	Fl = 1/2 * 𝜌 * a  * ((𝑣1)^2- (𝑣2)^2)*/
 	liftForce = r*A*(pow(v1, 2)-pow(v2, 2)) / 2.0;
 
-	printf("Lift force = %f\n", liftForce);
+	printf("Lift force = %f N\n", liftForce);
 
 	return 0;
 }
