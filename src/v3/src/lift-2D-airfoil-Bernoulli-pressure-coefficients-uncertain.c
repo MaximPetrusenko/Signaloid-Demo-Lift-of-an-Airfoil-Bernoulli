@@ -96,12 +96,14 @@ void read_csv(int row, int col, char *filename, double **data){
 }
 
 static void
-loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, double *  Cp2, char[] filename)
+loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, double *  Cp2, char * fname)
 {
     double V  = 30.0;
     double Rh = 0.0; 
     double h  = 0.0; 
     double T  = 15.0;
+
+    printf("%s",fname);
     /* air pressure in Pascals Pair = P0 × exp(-g × M × (h - h0)/(R × T) * 101,325 (1 atm );
     *
     * Rd = 287.058 J/(kg·K), Rv = 461.495 J/(kg·K),  
@@ -121,9 +123,6 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
     printf("P1=%f\n", Psat);  
     printf("Pv=%f\n", Pv);
     printf("Pd=%f\n", Pd);
-
-
-	char fname[256] = filename;
 
 	double **data;
 	data = (double **)malloc(row * sizeof(double *));
@@ -204,7 +203,7 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
 
 }
 
-int main(int argc, char *	argv[])
+int main(int argc, char * argv[])
 {
     /* code */
 	if (argc < 1){
@@ -213,8 +212,9 @@ int main(int argc, char *	argv[])
 	}
 
 	double	A, v1, v2, r, Cp1, Cp2, liftForce;
-    char fname[256];	strcpy(fname, argv[0]);
-	loadInputs(&A, &v1, &v2, &r, &Cp1, &Cp2, fname);
+    char fname[256]; strcpy(fname, argv[1]);
+    printf("%s",fname);
+	loadInputs(&A, &v1, &v2, &r, &Cp1, &Cp2, &fname);
 
     /*	Fl = 1/2 * 𝜌 * a  * ((𝑣1)^2- (𝑣2)^2)*/
 	liftForce = r*A*(pow(v1, 2)-pow(v2, 2)) / 2.0;
