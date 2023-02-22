@@ -41,7 +41,7 @@
 
 
 static void
-loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, double *  Cp2)
+loadInputs(double *  A, double *  v1, double * v2, double * r)
 {
     double V  = 30.0;
     double Rh = 0.0;
@@ -104,9 +104,9 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
 
 int main(int argc, char *	argv[])
 {
-	double	A, v1, v2, r, Cp1, Cp2, liftForce;
+	double	A, v1, v2, r liftForce;
 
-	loadInputs(&A, &v1, &v2, &r, &Cp1, &Cp2);
+	loadInputs(&A, &v1, &v2, &r);
 
     /*	Fl = 1/2 * 𝜌 * a  * ((𝑣1)^2- (𝑣2)^2) */
 	liftForce = r*A*(pow(v1, 2)-pow(v2, 2)) / 2.0;
