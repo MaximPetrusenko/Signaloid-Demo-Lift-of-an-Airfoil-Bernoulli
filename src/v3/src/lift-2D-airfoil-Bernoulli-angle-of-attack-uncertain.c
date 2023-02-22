@@ -18,8 +18,7 @@
  *  -   `T`:	    15 °C- ambient temperature uncertain 
  *  -   `Rh`:	    0.0 - humidity level (dry air)
  *	-	`V`:		30 m/s - free stream velocity below supersonic speed
- *	-	`Сp1`:		~-2.8 to 1.0 - coefficient for pressurre distribution over an airfoil
- *	-	`Сp2`:		~-0.54 to 1.14 - coefficient for pressurre distribution under an airfoil
+ *	
  *
  *
  *  Velocities are being calculated based on pressure coefficient distributions 
@@ -82,7 +81,7 @@ void read_csv(int row, int col, char *filename, double **data){
 }
 
 static void
-loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, double *  Cp2, double **data)
+loadInputs(double *  A, double *  v1, double * v2, double * r,  double **data)
 {
     double V  = 30.0;
     double Rh = 0.0; 
@@ -177,11 +176,11 @@ int main(int argc, char * argv[])
 		data[i] = (double *)malloc(col * sizeof(double));
 	}
 
-	double	A, v1, v2, r, Cp1, Cp2, liftForce;
+	double	A, v1, v2, r, liftForce;
 
 
 	read_csv(row, col, fname, data);
-	loadInputs(&A, &v1, &v2, &r, &Cp1, &Cp2, data);
+	loadInputs(&A, &v1, &v2, &r, data);
 
     /*	Fl = 1/2 * 𝜌 * a  * ((𝑣1)^2- (𝑣2)^2) */
 	liftForce = r*A*(pow(v1, 2)-pow(v2, 2)) / 2.0;

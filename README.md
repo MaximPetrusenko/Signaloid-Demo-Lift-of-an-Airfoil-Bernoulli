@@ -18,8 +18,9 @@ The inputs and their ranges are:
   -	`h`:	  0.0 to 11019 m - elevation (troposphere)
   - `T`:	  -50 °C to 50 °C - ambient temperature
   -	`V`:		10 to 343 m/s - velocity below supersonic speed
-  -	`Сp1`:	~-2.8 to ~1.0 - coefficient for pressurre distribution over an airfoil (meassured for 80% of the upper surface (difference between upper and lower pressure on the last 20% surface(tail) is considered insignificant)
-  -	`Сp2`:	~-0.54 to ~1.14 - coefficient for pressurre distribution under an airfoil (meassured for 80% of the lower surface (difference between upper and lower pressure on the last 20% surface(tail) is considered insignificant)
+  -	`Сp1`:	~-0.54 to ~1.14 - coefficient for pressurre distribution under an airfoil (meassured for 80% of the lower surface (difference between upper and lower pressure on the last 20% surface(tail) is considered insignificant)
+  -	`Сp2`:	~-2.8 to ~1.0 - coefficient for pressurre distribution over an airfoil (meassured for 80% of the upper surface (difference between upper and lower pressure on the last 20% surface(tail) is considered insignificant)
+
   
 ![Coefficient-of-Pressure-vs-Percent-Chord-Length](https://user-images.githubusercontent.com/72452482/220147400-506b3916-9d18-4a7d-9139-2214d3a66bc1.png)
 

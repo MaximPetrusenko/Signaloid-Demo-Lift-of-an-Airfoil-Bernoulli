@@ -15,8 +15,8 @@
  *  -   `T`:	    15 °C - ambient temperature
  *  -   `Rh`:	    0.0 - humidity level (dry air)
  *	-	`V`:		30 m/s - free stream velocity below supersonic speed
- *	-	`Сp1`:		~-2.8 to 1.0 - coefficient for pressurre distribution over an airfoil (digitized plot) at 10° angle of attack
- *	-	`Сp2`:		~-0.54 to 1.14 - coefficient for pressurre distribution under an airfoil (digitized plot) at 10° angle of attack
+ *	-	`Сp1`:		~-0.54 to 1.14 - coefficient for pressurre distribution under an airfoil (digitized plot) at 10° angle of attack
+ *	-	`Сp2`:		~-2.8 to 1.0 - coefficient for pressurre distribution over an airfoil (digitized plot) at 10° angle of attack
  *
  *  Velocities are being calculated based on pressure coefficient distributions 
  *  𝑣x = Vstream * sqrt(|1-Cpx|)
@@ -56,7 +56,7 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
     //pressure of dry air
     double Pd = Pair - Pv;
 
-	double empiricalPressureCoefficientOverAirfoil[] = {
+	double Cp2[] = {
         -2.3444, -2.4402, -2.5411, -2.577, -2.7322, -2.7316, -2.5977,
         -2.575, -2.5415, -2.3405, -2.3121, -2.2061, -2.1597, -2.0826,
         -1.9988, -1.9037, -1.7997, -1.7692, -1.63, -1.6235, -1.4999
@@ -71,7 +71,7 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
         -0.1841, -0.1785, -0.1838, -0.1742, -0.1779, -0.1823, -0.1789
 	};
 
-        double empiricalPressureCoefficientUnderAirfoil[] = {
+        double Cp1[] = {
         0.8111, 0.9226, 1.0007, 0.9934, 0.8905, 0.8737, 0.7471,
         0.7336, 0.714, 0.6252, 0.6152, 0.5857, 0.5611, 0.4833,
         0.429, 0.403, 0.3861, 0.3781, 0.3431, 0.3423, 0.3439,
