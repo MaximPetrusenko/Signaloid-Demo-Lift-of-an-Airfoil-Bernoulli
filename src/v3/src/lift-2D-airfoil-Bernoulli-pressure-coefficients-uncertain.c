@@ -1,4 +1,4 @@
-/*v3 - assume that angle of attack is uncertain (0°,5° or 10°) (pressure coefficient distributions will be selected accordingly) 
+/*v3 - assume that temperature, elevation, humidity and, therefore, fluid density are uncertain
 * T = 15 °C, density 1.2253kg/m3
 * h = 0.0 m
 * V = 30 m/s
@@ -144,8 +144,6 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
 
         empricalPressure0AOA[i]  =empricalPressureOver0AOA[i];
         empricalPressure0AOA[i+row-1]=empricalPressureUnder0AOA[i];
-        // printf("empricalPressure10AOA[i]=%f\n", empricalPressure10AOA[i]);   
-        // printf("empricalPressure10AOA[i+row-1]=%f\n", empricalPressure10AOA[i+row-1]);   
     }
 
     double empiricalPressureCoefficientsUncertain[sampleCount][totalLength];
@@ -208,7 +206,7 @@ int main(int argc, char * argv[])
     /*	Fl = 1/2 * 𝜌 * a  * ((𝑣1)^2- (𝑣2)^2) */
 	liftForce = r*A*(pow(v1, 2)-pow(v2, 2)) / 2.0;
 
-	printf("Lift force = %f\n", liftForce);
+	printf("Lift force = %f N\n", liftForce);
 
 	return 0;
 }

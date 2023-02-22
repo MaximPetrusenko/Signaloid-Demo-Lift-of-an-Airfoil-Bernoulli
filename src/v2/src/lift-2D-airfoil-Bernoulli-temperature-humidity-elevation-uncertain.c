@@ -21,13 +21,6 @@
  *	-	`Сp1`:		~-2.8 to 1.0 - coefficient for pressurre distribution over an airfoil
  *	-	`Сp2`:		~-0.54 to 1.14 - coefficient for pressurre distribution under an airfoil
  *
- *
- *	Bernouilli law 
- *  P1+1/2*𝜌*(𝑣1)^2+𝜌*𝑔*𝑦1=P2+1/2*𝜌*(𝑣2)^2+𝜌*𝑔*𝑦2.
- *	Assumimg the difference in height between the top and bottom of the airfoil is neglidgible, there hydrostatic term is going to be canceled out and leave us just static and dynamic pressure terms
- *	P1+1/2*𝜌*(𝑣1)^2=P2+1/2*𝜌*(𝑣2)^2.
- *  After moving static pressure terms to the left side and dynamic pressure terms to the right side, we get difference in pressure between the bottom and top of the airfoil
- *  P1-P2 = 1/2 * 𝜌 * ((𝑣2)^2- (𝑣1)^2)
  *  Velocities are being calculated based on pressure coefficient distributions 
  *  Vx = Vstream * sqrt(|1-Cpx|)
  *   
@@ -69,13 +62,13 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
     double Psat = 6.1078*pow(10.0,7.5*T/(T+237.3));
     double Pv = Psat*Rh;
     double Pd = Pair - Pv;
-    printf("T=%f\n", T);
-    printf("h=%f\n", h);
-    printf("Rh=%f\n", Rh);
-    printf("Pa=%f\n", Pair);
-    printf("P1=%f\n", Psat);  
-    printf("Pv=%f\n", Pv);
-    printf("Pd=%f\n", Pd);
+    // printf("T=%f\n", T);
+    // printf("h=%f\n", h);
+    // printf("Rh=%f\n", Rh);
+    // printf("Pa=%f\n", Pair);
+    // printf("P1=%f\n", Psat);  
+    // printf("Pv=%f\n", Pv);
+    // printf("Pd=%f\n", Pd);
 
 	double empiricalPressureCoefficientOverAirfoil[] = {  //empirical or theoretical/simulated?
         -2.3444, -2.4402, -2.5411, -2.577, -2.7322, -2.7316, -2.5977,
@@ -116,14 +109,14 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
 	}
 	*v1 /= sizeof(empiricalPressureCoefficientOverAirfoil)/sizeof(double);
     *v2 /= sizeof(empiricalPressureCoefficientUnderAirfoil)/sizeof(double);
-    printf("v1=%f\n", *v1);
-    printf("v2=%f\n", *v2);
+    // printf("v1=%f\n", *v1);
+    // printf("v2=%f\n", *v2);
 	*A		= 2.3E-1;
-    printf("area=%f\n", *A);
+    // printf("area=%f\n", *A);
 
     /*  r = (Pd/(Rd*T))+(Pv/(Rv*T)). */
     *r = (Pd/(287.058*(T+273.15)))+(Pv/(461.495*(T+273.15)));
-    printf("density=%f\n", *r);
+    // printf("density=%f\n", *r);
 
 }
 
