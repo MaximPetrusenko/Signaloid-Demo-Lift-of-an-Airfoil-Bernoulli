@@ -153,8 +153,8 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
 
         empricalPressure0AOA[i]  =empricalPressureOver0AOA[i];
         empricalPressure0AOA[i+row-1]=empricalPressureUnder0AOA[i];
-        //printf("empricalPressure10AOA[i]=%f\n", empricalPressure10AOA[i]);   
-        //printf("empricalPressure10AOA[i+row-1]=%f\n", empricalPressure10AOA[i+row-1]);   
+        printf("empricalPressure10AOA[i]=%f\n", empricalPressure10AOA[i]);   
+        printf("empricalPressure10AOA[i+row-1]=%f\n", empricalPressure10AOA[i+row-1]);   
     }
 
     double empiricalPressureCoefficientsUncertain[sampleCount][totalLength]  = { 
@@ -171,6 +171,10 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
 			sampleCount,
 			totalLength);
 
+    for(int i=0; i<totalLength; i++) {
+        printf("empiricalPressureCoefficients[i]=%f\n", empiricalPressureCoefficients[i]);   
+    }
+    
 
     /*Vx = Vstream * sqrt(|1-Cpx|)*/ 
 	for (int i = 0; i < sizeof(empiricalPressureCoefficients)/sizeof(double)/2; i++) //(row-1) * sizeof(double)
