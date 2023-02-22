@@ -1,11 +1,4 @@
-/*v1 - no uncertainties  
-* T = 15 °C, density 1.2253kg/m3
-* h = 0.0 m
-* V = 30 m/s
-* A = 0.23 m^2
-* Rh = 0.0 (dry air)
-* Cp1 and Cp2 are empirical coefficients for pressure distributions at 10° angle of attack digitized from plot
-*/
+/*v1 - no uncertainties */ 
 #include <math.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -17,12 +10,13 @@
  *
  *	Inputs v1 [NACA 2412, 10° angle of attack]:
  *	The inputs and their ranges are:
- *	-	`A`:		0.1 to 1 m^2 - area of the 2D airfoil
- *	-	`h`:	   	0.0 to 11019 m - elevation (troposphere)
- *  -   `T`:	   	-50 °C to 50 °C - ambient temperature
- *	-	`V`:		10 to 343 m/s - free stream velocity below supersonic speed
- *	-	`Сp1`:		~-2.8 to 1.0 - coefficient for pressurre distribution over an airfoil (digitized plot)
- *	-	`Сp2`:		~-0.54 to 1.14 - coefficient for pressurre distribution under an airfoil (digitized plot)
+ *	-	`A`:		0.23 m^2 - area of the 2D airfoil
+ *	-	`h`:	   	0.0 m - elevation (troposphere)
+ *  -   `T`:	    15 °C - ambient temperature
+ *  -   `Rh`:	    0.0 - humidity level (dry air)
+ *	-	`V`:		30 m/s - free stream velocity below supersonic speed
+ *	-	`Сp1`:		~-2.8 to 1.0 - coefficient for pressurre distribution over an airfoil (digitized plot) at 10° angle of attack
+ *	-	`Сp2`:		~-0.54 to 1.14 - coefficient for pressurre distribution under an airfoil (digitized plot) at 10° angle of attack
  *
  *	Bernouilli law 
  *  P1+1/2*𝜌*(𝑣1)^2+𝜌*𝑔*𝑦1=P2+1/2*𝜌*(𝑣2)^2+𝜌*𝑔*𝑦2.

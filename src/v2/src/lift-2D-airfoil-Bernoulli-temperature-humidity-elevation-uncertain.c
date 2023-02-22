@@ -1,8 +1,4 @@
-/*v2 - assume that temperature, elevation, humidity and, therefore, fluid density are uncertain
-* V= 30 m/s
-* A = 0.23 m^2
-* empirical coefficient for pressure distributions at 10° angle of attack
-*/
+/*v2 - assume that temperature, elevation, humidity and, therefore, fluid density are uncertain */
 #include <math.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -14,12 +10,13 @@
  *
  *	Inputs v2 [NACA 2412, 10° angle of attack]:
  *	The inputs and their ranges are:
- *	-	`A`:		0.1 to 1 m^2 - area of the 2D airfoil
+ *	-	`A`:		0.23 m^2- area of the 2D airfoil
  *	-	`h`:	    0.0 to 11019 m - elevation (troposphere)
  *  -   `T`:	   -50 °C to 50 °C - ambient temperature uncertain 
- *	-	`V`:		10 to 343 m/s - free stream velocity below supersonic speed
- *	-	`Сp1`:		~-2.8 to 1.0 - coefficient for pressurre distribution over an airfoil
- *	-	`Сp2`:		~-0.54 to 1.14 - coefficient for pressurre distribution under an airfoil
+ *	-	`V`:		30 m/s - free stream velocity below supersonic spe
+ *  -   `Rh`:	    0.0 to 1.0 - humidity level (dry air)
+ *	-	`Сp1`:		~-2.8 to 1.0 - coefficient for pressurre distribution over an airfoil at 10° angle of attack
+ *	-	`Сp2`:		~-0.54 to 1.14 - coefficient for pressurre distribution under an airfoil at 10° angle of attack
  *
  *  Velocities are being calculated based on pressure coefficient distributions 
  *  𝑣x = Vstream * sqrt(|1-Cpx|)

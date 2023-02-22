@@ -1,10 +1,4 @@
-/*v3 - assume that angle of attack is uncertain (0°,5° or 10°) (pressure coefficient distributions will be selected accordingly) 
-* T = 15 °C, density 1.2253kg/m3
-* h = 0.0 m
-* V = 30 m/s
-* A = 0.23 m^2
-* Rh = 0.0 (dry air)
-*/
+/*v3 - assume that angle of attack is uncertain (0°,5° or 10°) (pressure coefficient distributions will be selected accordingly) */
 #include <math.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -19,10 +13,11 @@
  *
  *	Inputs v3 [NACA 2412, uncertain angle of attack (0°,5° or 10°)]:
  *	The inputs and their ranges are:
- *	-	`A`:		0.1 to 1 m^2 - area of the 2D airfoil
- *	-	`h`:	    0.0 to 11019 m - elevation (troposphere)
- *  -   `T`:	   -50 °C to 50 °C - ambient temperature uncertain 
- *	-	`V`:		10 to 343 m/s - free stream velocity below supersonic speed
+ *	-	`A`:		0.23 m^2 - area of the 2D airfoil
+ *	-	`h`:	    0.0 m - elevation (troposphere)
+ *  -   `T`:	    15 °C- ambient temperature uncertain 
+ *  -   `Rh`:	    0.0 - humidity level (dry air)
+ *	-	`V`:		30 m/s - free stream velocity below supersonic speed
  *	-	`Сp1`:		~-2.8 to 1.0 - coefficient for pressurre distribution over an airfoil
  *	-	`Сp2`:		~-0.54 to 1.14 - coefficient for pressurre distribution under an airfoil
  *
