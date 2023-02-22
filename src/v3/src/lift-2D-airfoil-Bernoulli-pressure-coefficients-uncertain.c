@@ -157,17 +157,22 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
         printf("empricalPressure10AOA[i+row-1]=%f\n", empricalPressure10AOA[i+row-1]);   
     }
 
-    double empiricalPressureCoefficientsUncertain[sampleCount][totalLength]  = { 
-        {*empricalPressure10AOA},
-        {*empricalPressure5AOA},
-        {*empricalPressure0AOA}
-    };
+    double empiricalPressureCoefficientsUncertain[sampleCount][totalLength];
+
+    
+    for(int i = 0; i < totalLength; i++){
+            empiricalPressureCoefficientsUncertain[0][i] = empricalPressure10AOA[i];
+            empiricalPressureCoefficientsUncertain[1][i] = empricalPressure5AOA[i];
+            empiricalPressureCoefficientsUncertain[2][i] = empricalPressure0AOA[i];
+    }
+
+
 
     double empiricalPressureCoefficients[totalLength];
 
 	libUncertainDoubleDistFromMultidimensionalSamples(
 			empiricalPressureCoefficients,
-			(double *) empiricalPressureCoefficientsUncertain,
+			(void *) empiricalPressureCoefficientsUncertain,
 			sampleCount,
 			totalLength);
 
