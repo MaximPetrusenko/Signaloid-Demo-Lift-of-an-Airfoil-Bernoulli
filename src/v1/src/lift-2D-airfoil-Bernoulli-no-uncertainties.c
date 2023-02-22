@@ -24,15 +24,14 @@
  *	-	`Сp1`:		~-2.8 to 1.0 - coefficient for pressurre distribution over an airfoil (digitized plot)
  *	-	`Сp2`:		~-0.54 to 1.14 - coefficient for pressurre distribution under an airfoil (digitized plot)
  *
- *  Bernouilli law 
+ *	Bernouilli law 
  *  P1+1/2*𝜌*(𝑣1)^2+𝜌*𝑔*𝑦1=P2+1/2*𝜌*(𝑣2)^2+𝜌*𝑔*𝑦2.
- *  Assumimg the difference in height between the top and bottom of the airfoil is neglidgible, there hydrostatic term is going to be canceled out and leave us just static and dynamic pressure terms
- *  P1+1/2*𝜌*(𝑣1)^2=P2+1/2*𝜌*(𝑣2)^2.
+ *	Assumimg the difference in height between the top and bottom of the airfoil is neglidgible, there hydrostatic term is going to be canceled out and leave us just static and dynamic pressure terms
+ *	P1+1/2*𝜌*(𝑣1)^2=P2+1/2*𝜌*(𝑣2)^2.
  *  After moving static pressure terms to the left side and dynamic pressure terms to the right side, we get difference in pressure between the bottom and top of the airfoil
  *  P1-P2 = 1/2 * 𝜌 * ((𝑣2)^2- (𝑣1)^2)
- *
- *  Velocities are being calculated based on pressure coefficient distributions:
- *  V = Vstream - sqrt(|1-Cpx|)
+ *  Velocities are being calculated based on pressure coefficient distributions 
+ *  Vx = Vstream * sqrt(|1-Cpx|)
  * 
  *  Air density r(kg/m^3) calculation process:
  *
@@ -46,6 +45,7 @@
  *  Lift force is being calculated by multiplying the net pressure by the wing area.
  *  
  *	Outputs:
+ *  - "Fl" - N/m^3 - Lift force
  *	Fl = 1/2 * 𝜌 * a  * ((𝑣2)^2- (𝑣1)^2)
  *
  *
@@ -138,7 +138,7 @@ int main(int argc, char *	argv[])
     /*	Fl = 1/2 * 𝜌 * a  * ((𝑣1)^2- (𝑣2)^2)*/
 	liftForce = r*A*(pow(v1, 2)-pow(v2, 2)) / 2.0;
 
-	printf("Lift force = %f", liftForce);
+	printf("Lift force = %f\n", liftForce);
 
 	return 0;
 }

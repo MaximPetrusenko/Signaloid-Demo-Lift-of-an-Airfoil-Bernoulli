@@ -29,7 +29,7 @@
  *  After moving static pressure terms to the left side and dynamic pressure terms to the right side, we get difference in pressure between the bottom and top of the airfoil
  *  P1-P2 = 1/2 * 𝜌 * ((𝑣2)^2- (𝑣1)^2)
  *  Velocities are being calculated based on pressure coefficient distributions 
- *  V = |Vstream| - sqrt(Cp - 1)
+ *  Vx = Vstream * sqrt(|1-Cpx|)
  *   
  *  Air density r(kg/m^3) calculation process:
  *
@@ -43,6 +43,7 @@
  *  Lift force is being calculated by multiplying the net pressure by the wing area.
  *  
  *	Outputs:
+ *  - "Fl" - Lift force (N)
  *	Fl = 1/2 * 𝜌 * a  * ((𝑣2)^2- (𝑣1)^2)
  *
  *

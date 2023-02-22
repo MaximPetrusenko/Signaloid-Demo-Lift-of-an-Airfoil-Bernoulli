@@ -34,7 +34,7 @@
  *  After moving static pressure terms to the left side and dynamic pressure terms to the right side, we get difference in pressure between the bottom and top of the airfoil
  *  P1-P2 = 1/2 * 𝜌 * ((𝑣2)^2- (𝑣1)^2)
  *  Velocities are being calculated based on pressure coefficient distributions 
- *  V = |Vstream| - sqrt(Cp - 1)
+ *  Vx = Vstream * sqrt(|1-Cpx|)
  *   
  *  Air density r(kg/m^3) calculation process:
  *
@@ -48,7 +48,8 @@
  *  Lift force is being calculated by multiplying the net pressure by the wing area.
  *  
  *	Outputs:
- *	Fl = 1/2 * 𝜌 * a  * ((𝑣2)^2- (𝑣1)^2)
+ *  - 'Fl' -  Lift force (N)
+ *	Fl = 1/2 * 𝜌 * a  * ((𝑣2)^2- (𝑣1)^2)  
  *
  *
  */
@@ -68,12 +69,10 @@ void read_csv(int row, int col, char *filename, double **data){
     char line[4098];
 	while (fgets(line, 4098, file) && (i < row))
     {
-    	// double row[ssParams->nreal + 1];
         char* tmp = strdup(line);
 
 	    int j = 0;
 	    char* tok;
-        //printf("%s\t", line);
 	    for (tok = strtok(line, ";"); tok && *tok; j++, tok = strtok(NULL, ";\n"))
 	    {
             int index=0;
@@ -86,9 +85,7 @@ void read_csv(int row, int col, char *filename, double **data){
                 index++;
             }
 	        data[i][j] = atof(tok);
-	        //printf("%f\t", data[i][j]);
 	    }
-	    //printf("\n");
 
         free(tmp);
         i++;
@@ -158,15 +155,12 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
     }
 
     double empiricalPressureCoefficientsUncertain[sampleCount][totalLength];
-
-    
+  
     for(int i = 0; i < totalLength; i++){
             empiricalPressureCoefficientsUncertain[0][i] = empricalPressure10AOA[i];
             empiricalPressureCoefficientsUncertain[1][i] = empricalPressure5AOA[i];
             empiricalPressureCoefficientsUncertain[2][i] = empricalPressure0AOA[i];
     }
-
-
 
     double empiricalPressureCoefficients[totalLength];
 
@@ -176,18 +170,11 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
 			sampleCount,
 			totalLength);
 
-    for(int i=0; i<totalLength; i++) {
-        printf("empiricalPressureCoefficients[i]=%f\n", empiricalPressureCoefficients[i]);   
-    }
-    
-
     /*Vx = Vstream * sqrt(|1-Cpx|)*/ 
 	for (int i = 0; i < sizeof(empiricalPressureCoefficients)/sizeof(double)/2; i++) //(row-1) * sizeof(double)
-	{  //printf("empricalPressure10AOA[row-1+i]=%f\n", empricalPressure10AOA[row-1+i]);   
+	{ 
 		*v1 += V * sqrt(fabs(1-empiricalPressureCoefficients[i]));
-        //printf("v1=%f\n", *v1); 
         *v2 += V * sqrt(fabs(1-empiricalPressureCoefficients[row-1+i]));
-        //printf("v2=%f\n", *v2); 
 	}
     
 	*v1 /= sizeof(empiricalPressureCoefficients)/sizeof(double);
@@ -205,7 +192,6 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
 
 int main(int argc, char * argv[])
 {
-    /* code */
 	if (argc < 1){
 		printf("Please specify the CSV file as an input.\n");
 		exit(0);
@@ -225,7 +211,7 @@ int main(int argc, char * argv[])
 	read_csv(row, col, fname, data);
 	loadInputs(&A, &v1, &v2, &r, &Cp1, &Cp2, data);
 
-    /*	Fl = 1/2 * 𝜌 * a  * ((𝑣1)^2- (𝑣2)^2)*/
+    /*	Fl = 1/2 * 𝜌 * a  * ((𝑣1)^2- (𝑣2)^2) */
 	liftForce = r*A*(pow(v1, 2)-pow(v2, 2)) / 2.0;
 
 	printf("Lift force = %f\n", liftForce);
