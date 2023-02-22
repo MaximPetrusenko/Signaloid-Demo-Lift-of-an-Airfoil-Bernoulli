@@ -108,7 +108,7 @@ int main(int argc, char *	argv[])
 {
 	double	A, v1, v2, r, liftForce;
 
-	loadInputs(&A, &v1, &v2, &r, &Cp1, &Cp2);
+	loadInputs(&A, &v1, &v2, &r);
 
     /*	Fl = 1/2 * 𝜌 * a  * ((𝑣1)^2- (𝑣2)^2) */
 	liftForce = r*A*(pow(v1, 2)-pow(v2, 2)) / 2.0;
