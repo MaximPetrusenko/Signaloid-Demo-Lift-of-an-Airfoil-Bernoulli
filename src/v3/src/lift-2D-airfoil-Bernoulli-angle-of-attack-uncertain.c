@@ -182,7 +182,7 @@ int main(int argc, char * argv[])
 	read_csv(row, col, fname, data);
 	loadInputs(&A, &v1, &v2, &r, data);
 
-    /*	Fl = 1/2 * 𝜌 * a  * ((𝑣1)^2- (𝑣2)^2) */
+    /*	Fl = 1/2 * 𝜌 * a  * ((𝑣2)^2- (𝑣1)^2) */
 	liftForce = r*A*(pow(v2, 2)-pow(v1, 2)) / 2.0;
 
 	printf("Lift force = %f\n", liftForce);
