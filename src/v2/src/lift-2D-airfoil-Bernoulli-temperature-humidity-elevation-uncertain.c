@@ -13,13 +13,13 @@
  *	-	`A`:		0.23 m^2- area of the 2D airfoil
  *	-	`h`:	    0.0 to 11019 m - elevation (troposphere)
  *  -   `T`:	   -50 °C to 50 °C - ambient temperature uncertain 
- *	-	`V`:		30 m/s - free stream velocity below supersonic spe
+ *	-	`V`:		30 m/s - free stream velocity below supersonic speed
  *  -   `Rh`:	    0.0 to 1.0 - humidity level (dry air)
  *	-	`Сp1`:		~-2.8 to 1.0 - coefficient for pressurre distribution over an airfoil at 10° angle of attack
  *	-	`Сp2`:		~-0.54 to 1.14 - coefficient for pressurre distribution under an airfoil at 10° angle of attack
  *
  *  Velocities are being calculated based on pressure coefficient distributions 
- *  𝑣x = Vstream * sqrt(|1-Cpx|)
+ *  𝑣x = V * sqrt(|1-Cpx|)
  *   
  *  Air density r(kg/m^3) calculation process:
  *
@@ -27,7 +27,7 @@
  *  where M (molar mass of air) = 0.0289644 kg/mol, R (universal gas constant) = 8.31432 N · m/(mol · K), g (acceleration due to gravity) = 9.80665 m/(s^2), T - temperature in Kelvins, reference height h0 = 0 m and reference pressure at sea level P0 = 1 atm
  *
  *  r(humid air) = (Pd/(Rd*T))+(Pv/(Rv*T)) 
- *  where Rd = 287.058 J/(kg·K), Rv = 461.495 J/(kg·K),  T - temperature in Kelvins, Pv (water vapor pressure in P) = p1*Rh,  Pd (pressure of dry air in Pa) = Pair - Pv, Psat (saturation vapor pressure in Pa)= 6.1078*10^(7,5*T/(T+237,3))
+ *  where Rd = 287.058 J/(kg·K), Rv = 461.495 J/(kg·K),  T - temperature in Kelvins, Pv (water vapor pressure in Pa) = p1*Rh,  Pd (pressure of dry air in Pa) = Pair - Pv, Psat (saturation vapor pressure in Pa)= 6.1078*10^(7,5*T/(T+237,3))
  *
  *
  *  Lift force is being calculated by multiplying the net pressure by the wing area.
@@ -47,27 +47,18 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
     double Rh = libUncertainDoubleUniformDist(0.0, 1.0);
     double h  = libUncertainDoubleUniformDist(0.0, 11019.2);
     double T  = libUncertainDoubleGaussDist(0.0, 50.0);
-    /* air pressure in Pascals Pair = P0 × exp(-g × M × (h - h0)/(R × T) * 101,325 (1 atm );
-    *
-    * Rd = 287.058 J/(kg·K), Rv = 461.495 J/(kg·K),  
-    * Pv = Psat*Rh,  
-    * Pd = Pair - Pv, 
-    * Psat = 6.1078*10^(7,5*T/(T+237,3))
-    *
-    */
-    double Pair = exp((-9.81 * 0.0289644 * h)/(8.31432 * (T+273.15))) * 101325.0;// atm * sea level pressure 101325 hPa
-    double Psat = 6.1078*pow(10.0,7.5*T/(T+237.3));
-    double Pv = Psat*Rh;
-    double Pd = Pair - Pv;
-    // printf("T=%f\n", T);
-    // printf("h=%f\n", h);
-    // printf("Rh=%f\n", Rh);
-    // printf("Pa=%f\n", Pair);
-    // printf("P1=%f\n", Psat);  
-    // printf("Pv=%f\n", Pv);
-    // printf("Pd=%f\n", Pd);
 
-	double empiricalPressureCoefficientOverAirfoil[] = {  //empirical or theoretical/simulated?
+    //air pressure
+    double Pair = exp((-9.81 * 0.0289644 * h)/(8.31432 * (T+273.15))) * 101325.0; // atm * sea level pressure 101325 hPa
+    //saturation vapor pressure
+    double Psat = 6.1078*pow(10.0,7.5*T/(T+237.3));
+    //water vapor pressure
+    double Pv = Psat*Rh;
+    //pressure of dry air
+    double Pd = Pair - Pv;
+
+
+	double empiricalPressureCoefficientOverAirfoil[] = { 
         -2.3444, -2.4402, -2.5411, -2.577, -2.7322, -2.7316, -2.5977,
         -2.575, -2.5415, -2.3405, -2.3121, -2.2061, -2.1597, -2.0826,
         -1.9988, -1.9037, -1.7997, -1.7692, -1.63, -1.6235, -1.4999
@@ -97,8 +88,7 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
         0.1134, 0.1031, 0.1022, 0.1164, 0.1036, 0.1032, 0.1174
 		}; 
     
-    /*Vx = Vstream * sqrt(|1-Cpx|)*/
-
+    /*Vx = V * sqrt(|1-Cpx|)*/
 	for (int i = 0; i < sizeof(empiricalPressureCoefficientOverAirfoil)/sizeof(double); i++)
 	{
 		*v1 += V * sqrt(fabs(1-empiricalPressureCoefficientOverAirfoil[i]));
@@ -106,14 +96,11 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
 	}
 	*v1 /= sizeof(empiricalPressureCoefficientOverAirfoil)/sizeof(double);
     *v2 /= sizeof(empiricalPressureCoefficientUnderAirfoil)/sizeof(double);
-    // printf("v1=%f\n", *v1);
-    // printf("v2=%f\n", *v2);
-	*A		= 2.3E-1;
-    // printf("area=%f\n", *A);
+	*A	= 2.3E-1;
 
-    /*  r = (Pd/(Rd*T))+(Pv/(Rv*T)). */
+    /*  air density kg/m^3
+    r = (Pd/(Rd*T))+(Pv/(Rv*T)). */
     *r = (Pd/(287.058*(T+273.15)))+(Pv/(461.495*(T+273.15)));
-    // printf("density=%f\n", *r);
 
 }
 
@@ -123,7 +110,7 @@ int main(int argc, char *	argv[])
 
 	loadInputs(&A, &v1, &v2, &r, &Cp1, &Cp2);
 
-    /*	Fl = 1/2 * 𝜌 * a  * ((𝑣1)^2- (𝑣2)^2)*/
+    /*	Fl = 1/2 * 𝜌 * a  * ((𝑣1)^2- (𝑣2)^2) */
 	liftForce = r*A*(pow(v1, 2)-pow(v2, 2)) / 2.0;
 
 	printf("Lift force = %f N\n", liftForce);

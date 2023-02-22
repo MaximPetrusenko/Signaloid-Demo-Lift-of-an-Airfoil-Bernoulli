@@ -88,26 +88,14 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
     double Rh = 0.0; 
     double h  = 0.0; 
     double T  = 15.0;
-
-    /* air pressure in Pascals Pair = P0 × exp(-g × M × (h - h0)/(R × T) * 101,325 (1 atm );
-    *
-    * Rd = 287.058 J/(kg·K), Rv = 461.495 J/(kg·K),  
-    * Pv = Psat*Rh,  
-    * Pd = Pair - Pv, 
-    * Psat = 6.1078*10^(7,5*T/(T+237,3))
-    *
-    */
-    double Pair = exp((-9.81 * 0.0289644 * h)/(8.31432 * (T+273.15))) * 101325.0;// atm * sea level pressure 101325 hPa
+    //air pressure
+    double Pair = exp((-9.81 * 0.0289644 * h)/(8.31432 * (T+273.15))) * 101325.0; // atm * sea level pressure 101325 hPa
+    //saturation vapor pressure
     double Psat = 6.1078*pow(10.0,7.5*T/(T+237.3));
+    //water vapor pressure
     double Pv = Psat*Rh;
+    //pressure of dry air
     double Pd = Pair - Pv;
-    // printf("T=%f\n", T);
-    // printf("h=%f\n", h);
-    // printf("Rh=%f\n", Rh);
-    // printf("Pa=%f\n", Pair);
-    // printf("P1=%f\n", Psat);  
-    // printf("Pv=%f\n", Pv);
-    // printf("Pd=%f\n", Pd);
 
     double empricalPressureOver10AOA[row-1];
     double empricalPressureOver5AOA[row-1];
@@ -139,8 +127,6 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
 
         empricalPressure0AOA[i]  =empricalPressureOver0AOA[i];
         empricalPressure0AOA[i+row-1]=empricalPressureUnder0AOA[i];
-        // printf("empricalPressure10AOA[i]=%f\n", empricalPressure10AOA[i]);   
-        // printf("empricalPressure10AOA[i+row-1]=%f\n", empricalPressure10AOA[i+row-1]);   
     }
 
     double empiricalPressureCoefficientsUncertain[sampleCount][totalLength];
@@ -159,7 +145,7 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
 			sampleCount,
 			totalLength);
 
-    /*Vx = Vstream * sqrt(|1-Cpx|)*/ 
+    /*Vx = V * sqrt(|1-Cpx|) */ 
 	for (int i = 0; i < sizeof(empiricalPressureCoefficients)/sizeof(double)/2; i++) //(row-1) * sizeof(double)
 	{ 
 		*v1 += V * sqrt(fabs(1-empiricalPressureCoefficients[i]));
@@ -168,14 +154,11 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
     
 	*v1 /= sizeof(empiricalPressureCoefficients)/sizeof(double);
     *v2 /= sizeof(empiricalPressureCoefficients)/sizeof(double);
-    // printf("v1=%f\n", *v1);
-    // printf("v2=%f\n", *v2);
-	*A		= 2.3E-1;
-    // printf("area=%f\n", *A);
+	*A	= 2.3E-1;
 
-    /*  r = (Pd/(Rd*T))+(Pv/(Rv*T)). */
+    /*  air density kg/m^3
+    r = (Pd/(Rd*T))+(Pv/(Rv*T)). */
     *r = (Pd/(287.058*(T+273.15)))+(Pv/(461.495*(T+273.15)));
-    // printf("density=%f\n", *r);
 
 }
 
