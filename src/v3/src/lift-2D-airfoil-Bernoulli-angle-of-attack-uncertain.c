@@ -102,7 +102,7 @@ loadInputs(double *  A, double *  v1, double * v2, double * r,  double **data)
     double empricalPressureUnder0AOA[row-1];
     double empricalPressureUnder5AOA[row-1];
     double empricalPressureUnder10AOA[row-1];
-    for(int i = 1; i < 140; i++)
+    for(int i = 1; i < row; i++)
     {
         empricalPressureOver10AOA[i-1] = data[i][1];
         empricalPressureOver5AOA[i-1] = data[i][2];
@@ -151,8 +151,8 @@ loadInputs(double *  A, double *  v1, double * v2, double * r,  double **data)
         *v1 += V * sqrt(fabs(1-empiricalPressureCoefficients[row-1+i]));
 	}
     
-	*v2 /= sizeof(empiricalPressureCoefficients)/sizeof(double);
-    *v1 /= sizeof(empiricalPressureCoefficients)/sizeof(double);
+	*v2 /= sizeof(empiricalPressureCoefficients)/sizeof(double)/2.0;
+    *v1 /= sizeof(empiricalPressureCoefficients)/sizeof(double)/2.0;
 	*A	= 2.3E-1;
 
     /*  air density kg/m^3

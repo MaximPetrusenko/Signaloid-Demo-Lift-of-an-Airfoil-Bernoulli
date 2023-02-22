@@ -2,7 +2,6 @@
 #include <math.h>
 #include <stdint.h>
 #include <stdio.h>
-#include <uncertain.h>
 
 /*  Overview: 
  *	Computation of generated lift force for a 2D NACA 2412 airfoil based on Bernoulli s equation (applicable only for inviscid and incompressible dry air flow)
