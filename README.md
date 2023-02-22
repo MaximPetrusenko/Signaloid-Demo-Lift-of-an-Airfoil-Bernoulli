@@ -10,7 +10,7 @@ This example shows how uncertainties in empirical model parameters affect the un
 Other assumptions are:
 - Reference levels for height and pressure are h0 = 0, P0 = 1 atm (101325 Pa)
 - Attitude 0°
-- Possible angles of attack: 0°, 5°, 10° (empirical data based on those AOA)
+- Possible angles of attack: 0°, 5°, 10° (empirical data based on those AOAs)
 
 ## Inputs
 The inputs and their ranges are:
