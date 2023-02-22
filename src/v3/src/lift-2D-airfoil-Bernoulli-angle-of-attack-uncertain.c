@@ -147,12 +147,12 @@ loadInputs(double *  A, double *  v1, double * v2, double * r,  double **data)
     /*Vx = V * sqrt(|1-Cpx|) */ 
 	for (int i = 0; i < sizeof(empiricalPressureCoefficients)/sizeof(double)/2; i++) //(row-1) * sizeof(double)
 	{ 
-		*v1 += V * sqrt(fabs(1-empiricalPressureCoefficients[i]));
-        *v2 += V * sqrt(fabs(1-empiricalPressureCoefficients[row-1+i]));
+		*v2 += V * sqrt(fabs(1-empiricalPressureCoefficients[i]));
+        *v1 += V * sqrt(fabs(1-empiricalPressureCoefficients[row-1+i]));
 	}
     
-	*v1 /= sizeof(empiricalPressureCoefficients)/sizeof(double);
-    *v2 /= sizeof(empiricalPressureCoefficients)/sizeof(double);
+	*v2 /= sizeof(empiricalPressureCoefficients)/sizeof(double);
+    *v1 /= sizeof(empiricalPressureCoefficients)/sizeof(double);
 	*A	= 2.3E-1;
 
     /*  air density kg/m^3
@@ -183,7 +183,7 @@ int main(int argc, char * argv[])
 	loadInputs(&A, &v1, &v2, &r, data);
 
     /*	Fl = 1/2 * 𝜌 * a  * ((𝑣1)^2- (𝑣2)^2) */
-	liftForce = r*A*(pow(v1, 2)-pow(v2, 2)) / 2.0;
+	liftForce = r*A*(pow(v2, 2)-pow(v1, 2)) / 2.0;
 
 	printf("Lift force = %f\n", liftForce);
 

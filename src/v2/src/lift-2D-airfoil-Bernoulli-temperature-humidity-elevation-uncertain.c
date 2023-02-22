@@ -111,7 +111,7 @@ int main(int argc, char *	argv[])
 	loadInputs(&A, &v1, &v2, &r);
 
     /*	Fl = 1/2 * 𝜌 * a  * ((𝑣1)^2- (𝑣2)^2) */
-	liftForce = r*A*(pow(v1, 2)-pow(v2, 2)) / 2.0;
+	liftForce = r*A*(pow(v2, 2)-pow(v1, 2)) / 2.0;
 
 	printf("Lift force = %f N\n", liftForce);
 
