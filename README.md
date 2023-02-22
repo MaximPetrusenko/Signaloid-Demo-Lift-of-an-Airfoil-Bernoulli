@@ -24,8 +24,9 @@ The inputs and their ranges are:
 ![Coefficient-of-Pressure-vs-Percent-Chord-Length](https://user-images.githubusercontent.com/72452482/220147400-506b3916-9d18-4a7d-9139-2214d3a66bc1.png)
 
 ## Outputs
-Lift force is being calculated by multiplying the net pressure by the wing area.
-Fl = 1/2 * 𝜌 * a  * ((𝑣2)^2- (𝑣1)^2)
+Lift force (N) is being calculated by multiplying the net pressure by the wing area.
+Fl = 1/2 * 𝜌 * A  * ((𝑣2)^2- (𝑣1)^2)
+where 𝜌 is the density of the air, A is the area of a 2D airfoil, v2 - wind speed over an airfoil, v1 - wind speed under an airfoil
  
 ## Repository Tree Structure
 The repository has all the model parameters as point-valued numbers, with the 𝑣1 and 𝑣2 computed as the mean values from the empirical distributions of pressure coefficients [^0] over and under an airfoil respectively.
@@ -34,10 +35,16 @@ The repository has all the model parameters as point-valued numbers, with the �
 .
 ├── README.md
 ├── v1
-│   ├── README.md
 │   └── src
-│       ├── README.md
 │       └── lift-2D-airfoil-Bernoulli-no-distributions.c
+├── v2
+│   ├── src
+│   │   └── lift-2D-airfoil-Bernoulli-temperature-humidity-elevation-uncertain.c
+└── v3
+    ├── inputs
+    │    └── all_angles.csv
+    └── src
+        └── lift-2D-airfoil-Bernoulli-angle-of-attack-uncertain.c
 
 ```
 <br/>
