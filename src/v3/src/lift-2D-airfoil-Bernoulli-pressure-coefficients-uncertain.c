@@ -65,7 +65,7 @@ void read_csv(int row, int col, char *filename, double **data){
 	file = fopen(filename, "r");
 
 	int i = 0;
-    char line[2024];
+    char line[4098];
 	while (fgets(line, 4098, file) && (i < row))
     {
     	// double row[ssParams->nreal + 1];
@@ -214,7 +214,6 @@ int main(int argc, char * argv[])
 
 
 	read_csv(row, col, fname, data);
-    printf("%s",fname);
 	loadInputs(&A, &v1, &v2, &r, &Cp1, &Cp2, data);
 
     /*	Fl = 1/2 * 𝜌 * a  * ((𝑣1)^2- (𝑣2)^2)*/
