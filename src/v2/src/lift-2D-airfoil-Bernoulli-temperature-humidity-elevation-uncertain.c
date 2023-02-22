@@ -89,13 +89,13 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
 		}; 
     
     /*Vx = V * sqrt(|1-Cpx|)*/
-	for (int i = 0; i < sizeof(empiricalPressureCoefficientOverAirfoil)/sizeof(double); i++)
+	for (int i = 0; i < sizeof(Cp2)/sizeof(double); i++)
 	{
-		*v1 += V * sqrt(fabs(1-empiricalPressureCoefficientOverAirfoil[i]));
-        *v2 += V * sqrt(fabs(1-empiricalPressureCoefficientUnderAirfoil[i]));
+		*v1 += V * sqrt(fabs(1-Cp1[i]));
+        *v2 += V * sqrt(fabs(1-Cp2[i]));
 	}
-	*v1 /= sizeof(empiricalPressureCoefficientOverAirfoil)/sizeof(double);
-    *v2 /= sizeof(empiricalPressureCoefficientUnderAirfoil)/sizeof(double);
+	*v1 /= sizeof(Cp1)/sizeof(double);
+    *v2 /= sizeof(Cp2)/sizeof(double);
 	*A	= 2.3E-1;
 
     /*  air density kg/m^3
