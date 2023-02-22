@@ -1,4 +1,4 @@
-/*v3 - assume that temperature, elevation, humidity and, therefore, fluid density are uncertain
+/*v3 - assume that angle of attack is uncertain (0°,5° or 10°) (pressure coefficient distributions will be selected accordingly) 
 * T = 15 °C, density 1.2253kg/m3
 * h = 0.0 m
 * V = 30 m/s
@@ -112,13 +112,13 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
     double Psat = 6.1078*pow(10.0,7.5*T/(T+237.3));
     double Pv = Psat*Rh;
     double Pd = Pair - Pv;
-    printf("T=%f\n", T);
-    printf("h=%f\n", h);
-    printf("Rh=%f\n", Rh);
-    printf("Pa=%f\n", Pair);
-    printf("P1=%f\n", Psat);  
-    printf("Pv=%f\n", Pv);
-    printf("Pd=%f\n", Pd);
+    // printf("T=%f\n", T);
+    // printf("h=%f\n", h);
+    // printf("Rh=%f\n", Rh);
+    // printf("Pa=%f\n", Pair);
+    // printf("P1=%f\n", Psat);  
+    // printf("Pv=%f\n", Pv);
+    // printf("Pd=%f\n", Pd);
 
     double empricalPressureOver10AOA[row-1];
     double empricalPressureOver5AOA[row-1];
@@ -150,8 +150,8 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
 
         empricalPressure0AOA[i]  =empricalPressureOver0AOA[i];
         empricalPressure0AOA[i+row-1]=empricalPressureUnder0AOA[i];
-        printf("empricalPressure10AOA[i]=%f\n", empricalPressure10AOA[i]);   
-        printf("empricalPressure10AOA[i+row-1]=%f\n", empricalPressure10AOA[i+row-1]);   
+        // printf("empricalPressure10AOA[i]=%f\n", empricalPressure10AOA[i]);   
+        // printf("empricalPressure10AOA[i+row-1]=%f\n", empricalPressure10AOA[i+row-1]);   
     }
 
     double empiricalPressureCoefficientsUncertain[sampleCount][totalLength];
@@ -179,14 +179,14 @@ loadInputs(double *  A, double *  v1, double * v2, double * r, double *  Cp1, do
     
 	*v1 /= sizeof(empiricalPressureCoefficients)/sizeof(double);
     *v2 /= sizeof(empiricalPressureCoefficients)/sizeof(double);
-    printf("v1=%f\n", *v1);
-    printf("v2=%f\n", *v2);
+    // printf("v1=%f\n", *v1);
+    // printf("v2=%f\n", *v2);
 	*A		= 2.3E-1;
-    printf("area=%f\n", *A);
+    // printf("area=%f\n", *A);
 
     /*  r = (Pd/(Rd*T))+(Pv/(Rv*T)). */
     *r = (Pd/(287.058*(T+273.15)))+(Pv/(461.495*(T+273.15)));
-    printf("density=%f\n", *r);
+    // printf("density=%f\n", *r);
 
 }
 
